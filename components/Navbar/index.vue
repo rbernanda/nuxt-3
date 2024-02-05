@@ -94,21 +94,9 @@ const showSidebar = () => {
   isSidebarOpen.value = true;
 };
 
-const listener = (event: MouseEvent) => {
-  if (
-    event.target === sidebarRef.value ||
-    event.composedPath().includes(sidebarRef.value) ||
-    event.target === excludeComponent.value ||
-    event.composedPath().includes(excludeComponent.value)
-  ) {
-    return;
-  }
-  isSidebarOpen.value = false;
-};
-onMounted(() => {
-  window.addEventListener("click", listener);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener("click", listener);
-});
+useDetectClickOutside(
+  sidebarRef,
+  excludeComponent,
+  () => (isSidebarOpen.value = false)
+);
 </script>
